@@ -1,0 +1,75 @@
+\chapter{Protocols}
+
+\clearpage
+\section{Password Eavesdropping Risks}
+A good case study comes from simple embedded systems, such as the remote control used to open
+your garage or to unlock the doors of cars manufactured up to the mid-1990’s.
+These primitive remote controls just broadcast their serial number, which also
+acts as the password. An attack that became common was to use a ‘grabber’, a device 
+that would record a code broadcast locally and replay it later. 
+
+sixteen-bit passwords are too short. It occasionally happened that people found they could unlock 
+the wrong car by mistake. By the mid-1990’s, devices appeared which could try all
+possible codes one after the other. A code will be found on average after about
+215 tries, which at ten per second takes under an hour. A thief operating in a
+parking lot with a hundred vehicles within range would be rewarded in less
+than a minute with a car helpfully flashing its lights.
+
+
+
+\section{Simple Authentication}
+
+	{\bf Nonce:} The term nonce can mean anything that guarantees the freshness of a
+	message. A nonce can, according to the context, be a random number, a serial
+	number, a random challenge received from a third party, or even a timestamp.
+
+	{\bf Security and business: }
+	Security mechanisms are used more and more to support business 
+	models, by accessory control, rights management, product tying and bundling. It is
+	wrong to assume blindly that security protocols exist to keep ‘bad’ guys ‘out’.
+	They are increasingly used to constrain the lawful owner of the equipment in
+	which they are built; their purpose may be of questionable legality or contrary
+	to public policy. For example: Many printer companies embed authentication mechanisms 
+	in printers to ensure that genuine toner cartridges are used. If a competitor’s 
+	product is loaded instead, the printer may quietly downgrade from 1200 dpi to 300 dpi, 
+	or simply refuse to work at all. Mobile phone vendors make a lot of money from 
+	replacement batteries, and now use authentication protocols to spot competitors’ 
+	products so they can be blocked or even drained more quickly. 
+
+	\clearpage
+	\subsection{Challenge and response}
+
+		Many cars use a more sophisticated two-pass protocol, called challenge-response, 
+		to actually authorise engine start. As the car key is inserted into the steering lock, 
+		the engine controller sends a challenge consisting of a random n-bit number to the key 
+		using short-range radio. The car key computes a response by encrypting the challenge. 
+		This is still not bulletproof.
+
+
+	\subsection{Reflection Attacks}
+		
+
+\section{Manipulating the Message}
+
+\section{Changing the Environment}
+
+\section{Chosen Protocol Attacks}
+
+\section{Managing Encryption Keys}
+
+	\subsection{Basic Key Management}
+
+	\subsection{The Needham-Schroeder Protocol}
+
+	\subsection{Kerberos}
+
+	\subsection{Practical Key Management}
+
+\section{Getting Formal}
+
+	\subsection{A Typical Smartcard Banking Protocol}
+
+	\subsection{The BAN Logic}
+
+
+

@@ -1,0 +1,106 @@
+\chapter{What is Security Engeneering?}
+\clearpage
+
+{\bf A Framework} Good security engeneering requires four things to come together:
+	\begin{enumerate} 
+		\item {\bf Policy:} what you're supposed to achieve.
+		\item {\bf Mechanism:} the chipers, access controls, hardware tamper-resistance
+		and other mechinery that you assemblein order to implement the policy.
+		\item {\bf Assurance:} the amount of reliance you can place on each particular mechanism.
+		\item {\bf Incentive:} the motive that people guarding and maintaining the system
+		have to do their job properly, and also the motive that the attackers have to try to defeat
+		your policy. 
+	\end{enumerate}
+
+
+{\bf Why ae poor policy choices made? } Quite simply, the incentives on the decision makers
+favor visible controls over effective ones. The result is what Bruce Schneier calls 
+"security theatre" - measures designed to produce a feeling of security rather than the reality.
+
+
+{\bf The role as a security engineer:} 
+	\begin{itemize}
+		\item We need to be able to put risks and threats in content.
+		\item We need to be able to make realistic assessments of what might go wrong.
+		\item We need to give our clients good advice.
+	\end{itemize}
+
+
+{\bf Case studies:} I will not describe these in detail. It is described in the book (pages 6-11).
+	\begin{itemize}
+		\item A bank
+		\item A military base
+		\item A hospital
+		\item The Home
+	\end{itemize}
+
+\clearpage
+\section{Definitions}
+\subsection{System}
+	\begin{enumerate}
+		\item a product or component, such as a cryptographic protocol, a smartcard
+		or the hardware of a PC.
+		\item a collection of the above plus an operating system, communications and
+		other things that go to make up an organization’s infrastructure.
+		\item the above plus one or more applications (media player, browser, word
+		processor, accounts / payroll package, and so on).
+		\item any or all of the above plus IT staff.
+		\item any or all of the above plus internal users and management;
+		\item any or all of the above plus customers and other external users
+	\end{enumerate}
+
+\subsection{Subject, Person and Principal}
+	\begin{itemize}
+		\item{\bf Subject:} By a subject I will mean a physical person (human, ET, ...), 
+		in any role including that of an operator, principal or victim. 
+		\item{\bf Person:} By a person, I will mean either a physical person or a 
+		legal person such as a company or government.
+		\item{\bf Principal:} A principal is an entity that participates in a security system. 
+		This entity can be a subject, a person, a role, or a piece of equipment such as a PC, smartcard, or
+		card reader terminal. A principal can also be a communications channel (which
+		might be a port number, or a crypto key, depending on the circumstance). A
+		principal can also be a compound of other principals
+	\end{itemize}
+
+\subsection{Identity} 
+
+\clearpage
+\subsection{Trust and Trustworthy} 
+	The definitions of trust and trustworthy are often confused. 
+	The following example illustrates the difference: if an NSA employee is observed in a toilet
+	stall at Baltimore Washington International airport selling key material to a
+	Chinese diplomat, then (assuming his operation was not authorized) we can
+	describe him as ‘trusted but not trustworthy’. Hereafter, we’ll use the NSA
+	definition that a trusted system or component is one whose failure can break the
+	security policy, while a trustworthy system or component is one that won’t fail.
+
+\subsection{Confidenciality, Privacy and Secrecy}
+	\begin{itemize}
+		\item {\bf Secrecy} is a technical term which refers to the effect of the mechanisms
+		used to limit the number of principals who can access information, such
+		as cryptography or computer access controls.
+		\item {\bf Confidentiality} involves an obligation to protect some other person’s 
+		or organization’s secrets if you know them.
+		\item {\bf Privacy} is the ability and/or right to protect your personal information
+		and extends to the ability and/or right to prevent invasions of personal space.
+	\end{itemize}
+
+\subsection{Authenticity and Integrity}
+
+
+\clearpage
+\section*{Summary}
+\begin{itemize}
+	\item Framework
+	\item Security theatre
+	\item The role as a security engineer
+	\item Case studies (bank, military base, hospital, the Home)
+	\item Definition: System
+	\item Definitions: subject, person and principal
+	\item Identity
+	\item Trust and Trustworthy
+	\item Confidenciality, Privacy and Secrecy
+	\item Authenticity and Integrity
+\end{itemize}
+
+ 
