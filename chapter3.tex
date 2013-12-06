@@ -23,8 +23,7 @@ than a minute with a car helpfully flashing its lights.
 	message. A nonce can, according to the context, be a random number, a serial
 	number, a random challenge received from a third party, or even a timestamp.
 
-	{\bf Security and business: }
-	Security mechanisms are used more and more to support business 
+	{\bf Security and business: } Security mechanisms are used more and more to support business 
 	models, by accessory control, rights management, product tying and bundling. It is
 	wrong to assume blindly that security protocols exist to keep ‘bad’ guys ‘out’.
 	They are increasingly used to constrain the lawful owner of the equipment in
@@ -43,14 +42,24 @@ than a minute with a car helpfully flashing its lights.
 		to actually authorise engine start. As the car key is inserted into the steering lock, 
 		the engine controller sends a challenge consisting of a random n-bit number to the key 
 		using short-range radio. The car key computes a response by encrypting the challenge. 
-		This is still not bulletproof.
+		This is still not bulletproof, how random is random?
 
+		{\bf two-factor authentication:} A much more visible use of challenge-response is in two-factor authentication.
+		Many organizations issue their staff with password generators to let them
+		log on to corporate computer systems. These may look like calculators
+		but their main function is as follows; when you want to log in to a machine on the network, 
+		you call up a logon screen and are presented with a random challenge of maybe seven digits. 
+		You key this into your password generator, together with a PIN of maybe four
+		digits. The device encrypts these eleven digits using a secret key shared with
+		the corporate security server, and displays the first seven digits of the result.
+		You enter these seven digits as your password.
 
 	\subsection{Reflection Attacks}
-		
+		--Write something here?--
 
+\clearpage
 \section{Manipulating the Message}
-
+	
 \section{Changing the Environment}
 
 \section{Chosen Protocol Attacks}
