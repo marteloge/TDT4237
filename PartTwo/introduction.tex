@@ -290,16 +290,277 @@
 
 		\subsection{Test Derivation}
 
-		\subsection{Functional and Non-Functional Test Requirements}
+		{\bf Testing Objectives} \\
+		One of the objectives of security testing is to validate that security controls function as 
+		expected. This is documented via {\bf security requirements} that describe the functionality 
+		of the security control. At a high level, this means proving confidentiality, integrity, and 
+		availability of the data as well as the service. The other objective is to validate that security
+		controls are implemented with few or no vulnerabilities. These are common vulnerabilities, 
+		such as the OWASP Top Ten, as well as vulnerabilities that are previously identified with 
+		security assessments during the SDLC, such as threat modeling, source code analysis, and 
+		penetration test. \\
 
-		\subsection{Derivation Through Use and Misuse Cases}
+		{\bf Security Requirement Documentation} \\
+		The first step in the documentation of security requirements is to understand the 
+		business requirements. A {\bf business requirement document} could provide the initial, 
+		high-level information of the expected functionality for the application. For example, 
+		the main purpose of an application may be to provide financial services to customers or 
+		shopping and purchasing goods from an on-line catalogue. A security section of the business 
+		requirements should highlight the need to protect the customer data as well as to comply 
+		with applicable security documentation such as regulations, standards, and policies.
 
-		\subsection{Security Tests Integrated in Workflow}
+		Applicable {\bf industry standards} for security need also to be captured by the general security 
+		requirement checklist. For example, in the case of applications that handle customer credit 
+		card data, the compliance with the PCI DSS standard forbids the storage of PINs and CVV2 data.
 
-		\subsection{Developers Security Tests}
+		Another section of the checklist needs to enforce general requirements for compliance with the 
+		{\bf organization information security standards and policies}. From the functional requirements 
+		perspective, requirement for the security control needs to map to a specific section of the 
+		information security standards. An example of such requirement can be: {\bf "a password
+		complexity of six alphanumeric characters must be enforced by the authentication controls 
+		used by the application."} \\
 
-		\subsection{Functional Testers' Security Tests}
+		{\bf Security Requirements Validation} \\
+		From the functionality perspective, the validation of security requirements is the main objective of 
+		security testing, while, from the risk management perspective, this is the objective of information 
+		security assessments. More in depth, the security assessment objective is risk analysis, such
+		as the identification of potential weaknesses in security controls that ensure the confidentiality, 
+		integrity, and availability of the data. 
+		Assuming encryption is used to protect the data, encryption algorithms and key
+		lengths need to comply with the {\bf organization encryption standards}. For example, a security 
+		requirement that can be security tested is verifying that only allowed ciphers are used 
+		(e.g., SHA-1, RSA, 3DES) with allowed minimum key lengths (e.g., more than 128 bit for symmetric 
+		and more than 1024 for asymmetric encryption).
 
-		\subsection{Security Test Data Analysis and Reporting}
+		From the security assessment perspective, security requirements can be validated at different 
+		phases of the SDLC by {\bf using different artifacts and testing methodologies}. For example, threat 
+		modeling focuses on identifying security flaws during design, secure code analysis and reviews 
+		focus on identifying security issues in source code during development, and penetration testing 
+		focuses on identifying vulnerabilities in the application during testing/validation.
+
+		{\bf Threats and Countermeasures Taxonomies}\\
+		A {\bf threat and countermeasure classification} that takes into consideration root causes of 
+		vulnerabilities is the critical factor to verify that security controls are designed, coded, 
+		and built so that the impact due to the exposure of such vulnerabilities is mitigated.
+
+		The focus of a threat and countermeasure {\bf categorization} is to define security requirements 
+		in terms of the threats and the root cause of the vulnerability. The root cause can be 
+		categorized as security flaw in design, a security bug in coding, or an issue due to insecure 
+		configuration. 	A threat and countermeasure categorization for vulnerabilities can also be used to 
+		document security requirements for secure coding such as secure coding standards. An example of 
+		a common coding error in authentication controls consists of applying an hash function to encrypt a 
+		password, without applying a seed to the value. 
+
+
+		{\bf Security Testing and Risk Analysis}\\
+		By combining the results of source code analysis and penetration testing it is possible to determine 
+		the likelihood and exposure of the vulnerability and calculate the risk rating of the vulnerability. 
+		For example, high and medium risk vulnerabilities can be prioritized for remediation, while low risk 
+		can be fixed in further releases.
+		By considering the threat scenarios exploiting common vulnerabilities it is possible to identify 
+		potential risks for which the application security control needs to be security tested. By thinking 
+		in terms of threats and vulnerabilities, it is possible to devise a battery of tests that simulate 
+		such attack scenarios.
+
+
+		\subsection{Positive Requirements}
+			From the perspective of functional security requirements, the applicable standards, policies 
+			and regulations drive both the need of a type of security control as well as the control  
+			functionality. These requirements are also referred to as {\bf “positive requirements”}, 
+			since they state the expected functionality that can be validated through security tests. 
+			Examples of positive requirements are: 
+				\begin{itemize}
+					\item The application will lockout the user after six failed logon attempts.
+					\item Passwords need to be six min characters, alphanumeric.
+				\end{itemize}
+			The validation of positive requirements consists of asserting the expected functionality and, 
+			as such, can be tested by re-creating the testing conditions, and by running the test according 
+			to predefined inputs and by asserting the expected outcome as a fail/pass condition.
+			In order to validate security requirements with security tests, security requirements need to 
+			be function driven and highlight the expected functionality {\bf (the what)} and implicitly 
+			the implementation {\bf (the how)}. Examples of high-level security design requirements for 
+			authentication can be:
+
+				\begin{itemize}
+					\item Protect user credentials and shared secrets in transit and in storage
+					\item Mask any confidential data in display (e.g., passwords, accounts)
+					\item Lock the user account after a certain number of failed login attempts
+					\item Do not show specific validation errors to the user as a result of failed logon
+					\item Only allow passwords that are alphanumeric, include special characters and six 
+				\end{itemize}
+
+		\subsection{Negative Requirements}
+			Security tests need also to be risk driven, that is they need to validate the application for 
+			unexpected behavior. These are also called {\bf “negative requirements”}, since they specify 
+			what the application should not do. Examples of "should not do" (negative) requirements are:
+				\begin{itemize}
+					\item The application should not allow for the data to be altered or destroyed
+					\item The application should not be compromised or misused for unauthorized financial 
+					transactions by a malicious user.
+				\end{itemize}
+
+			Negative requirements are more difficult to test, because there is no expected behavior to look for. 
+			This might require a threat analyst to come up with unforeseeable input conditions, causes, and 
+			effects. This is where security testing needs to be driven by risk analysis and threat modeling. 
+			The key is to document the threat scenarios and the functionality of the countermeasure as a factor 
+			to mitigate a threat. For example, in case of authentication controls, the following security
+			requirements can be documented from the threats and countermeasure perspective:
+
+				\begin{itemize}
+					\item Encrypt authentication data in storage and transit to mitigate risk of information
+					disclosure and authentication protocol attacks.
+					\item Encrypt passwords using non reversible encryption such as using a digest (e.g., HASH) 
+					and a seed to prevent dictionary attacks.
+					\item Lock out accounts after reaching a logon failure threshold and enforce password 
+					complexity to mitigate risk of brute force password attacks
+					\item Display generic error messages upon validation of credentials to mitigate risk 
+					of account harvesting/enumeration.
+				\end{itemize}
+
+			Threat modeling artifacts such as {\bf threat trees and attack libraries} can be useful to derive the 
+			negative test scenarios. A threat tree will assume {\bf a root attack} and identify different
+			{\bf exploits of security controls} and necessary {\bf countermeasures} that could be validated to 
+			be effective in mitigating such attacks.
+
+		\subsection{Use and Misuse Cases}
+			Pre-requisite in describing the application functionality is to understand what the application 
+			is supposed to do and how. This can be done by describing use cases. {\bf Use cases}, in the 
+			graphical form as commonly used in software engineering, show the interactions of actors and 
+			their relations, and help to identify the actors in the application, their relationships, the
+			intended sequence of actions for each scenario, alternative actions, special requirements, 
+			and pre- and post-conditions.
+
+			Similar to use cases, {\bf misuse and abuse cases} describe unintended and malicious use scenarios 
+			of the application. These misuse cases provide a way to describe scenarios of how an attacker 
+			could misuse and abuse the application. By going through the individual steps in a use scenario 
+			and thinking about how it can be maliciously exploited, potential flaws or aspects of the application 
+			that are not well-defined can be discovered. The key is to describe all possible or, at least, the
+			most critical use and misuse scenarios. Misuse scenarios allow the analysis of the application from 
+			the {\bf attacker's point of view}.
+
+			\clearpage
+			{\bf Sequrity Requirements Derivation Through Use and Misuse Cases:}
+				\begin{itemize}
+					\item Step 1: Describe the Functional Scenario: 
+					\item Step 2: Describe the Negative Scenario: 
+					\item Step 3: Describe Functional and Negative Scenarios With Use and Misuse Case:
+					\item Step 4: Elicit The Security Requirements. These security requirements need to be 
+					documented and tested.
+
+				\end{itemize}
+
+			\begin{figure}[H]
+				\includegraphics[width=\textwidth]{pics/useAndMisuse.jpg}
+			\end{figure}
+	\clearpage
+	\section{Security Tests Integrated in Developers and Testers Workflow}
+
+		\subsection{ Developers' Security Testing Workflow}
+			Security testing during the development phase of the SDLC represents the first 
+			opportunity for developers to ensure that individual software components that they 
+			have developed are security tested before they are integrated with other components 
+			and built into the application. Software components might consist of software artifacts 
+			such as functions, methods, and classes, as well as application programming interfaces, 
+			libraries, and executables. For security testing, developers can rely on the results of 
+			{\bf the source code analysis} to verify statically that the developed source code does 
+			not include potential vulnerabilities and is compliant with the secure coding standards. 
+			{\bf Security unit tests} can further verify dynamically (i.e., at run time) that the 
+			components function as expected.
+		\subsection{Testers' Security Testing Workflow}
+			After components and code changes are tested by developers and checked in to the application 
+			build, the most likely next step in the software development process workflow is to perform 
+			tests on the application as a whole entity. This level of testing is usually referred to as 
+			{\bf integrated test} and {\bf system level test}. 
+			These security tests on the application include both {\bf white box testing}, such as source 
+			code analysis, and {\bf black box testing}, such as penetration testing. {\bf Gray box testing} 
+			is similar to Black box testing. In a gray box testing we can assume we have some partial 
+			knowledge about the session management of our application, and that should help us in 
+			understanding whether the logout and timeout functions are properly secured.
+			A testing engineer who validates the security of the application in the integrated system 
+			environment might release the application for testing in the operational environment 
+			(e.g., {\bf user acceptance tests}). The application {\bf functional testing} is usually 
+			a responsibility of {\bf QA testers}, while {\bf white-hat hackers/security consultants} 
+			are usually responsible for {\bf security testing}. 
+
+	\clearpage
+	\section{Security Test Data Analysis And Reporting}
+
+	\subsection{Goals for Security Test Metrices and Measurements}
+		The definition of the goals for the security testing metrics and measurements is a pre-requisite 
+		for using security testing data for risk analysis and management processes. For example, a 
+		measurement such as the {\bf total number of vulnerabilities found} with security tests might quantify 
+		the security posture of the application. These measurements also help to identify security 
+		objectives for software security testing: for example, reducing the number of vulnerabilities to 
+		an acceptable number (minimum) before the application is deployed into production.
+
+		From the perspective of the {\bf effort required to fix} a defect, both security and quality defects 
+		can be measured in terms of developer hours to implement the fix, the tools and resources required 
+		to fix, and, finally, the cost to implement the fix.
+
+		Security testing data needs to support the security risk strategy at critical checkpoints during 
+		the SDLC. For example, vulnerabilities found in source code with source code analysis represent 
+		an initial measure of risk. Such {\bf measure of risk (e.g., high, medium, low)} for the vulnerability 
+		can be calculated by determining the exposure and likelihood factors and, further, by validating 
+		such vulnerability with penetration tests. The risk metrics associated to vulnerabilities found 
+		with security tests empower business management to make {\bf risk management decisions}, such as to 
+		decide whether risks can be accepted, mitigated, or transferred at different levels within the 
+		organization.
+
+		We need to lowering the cost of fixing the vulnerabilities, since it is less expensive to deal with the 
+		vulnerabilities when they are found (in the same phase of the SDLC), rather than fixing them 
+		later in another phase.
+
+		When security test data is reported it has to provide metrics to support the analysis. The scope 
+		of the analysis is the interpretation of test data to find clues about the security of the software 
+		being produced as well the effectiveness of the process. Some examples of clues supported by security 
+		test data can be:
+
+		Are vulnerabilities reduced to an acceptable level for release? Are all security test requirements being met?
+		What are the major root causes of security issues? Which security activity is most effective in finding vulnerabilities? Which team is more productive in fixing security defects and vulnerabilities? 
+		Which percentage of overall vulnerabilities are high risks? Which tools are most effective in detecting security vulnerabilities?
+
+		\subsection{Reporting Requirements}
+
+			The security posture of an application can be characterized from the perspective of the effect, 
+			such as number of vulnerabilities and the risk rating of the vulnerabilities, as well as from 
+			the perspective of the cause (i.e., origin) such as coding errors, architectural flaws, and 
+			configuration issues.
+
+			When reporting security test data, the best practice is to include the following information, 
+			besides the categorization of each vulnerability by type:
+				\begin{itemize}
+					\item The security threat that the issue is exposed to
+					\item The root cause of security issues (e.g., security bugs, security flaw)
+					\item The testing technique used to find it
+					\item The remediation of the vulnerability (e.g., the countermeasure)
+					\item The risk rating of the vulnerability (High, Medium, Low)
+				\end{itemize}
+
+		\subsection{Business Cases}
+			For the security test metrics to be useful, they need to {\bf provide value} back to the organization's 
+			security test data stakeholders, such as project managers, developers, information security offices,
+			auditors, and chief information officers. The value can be in terms of the business case that each 
+			project stakeholder has in terms of role and responsibility.
+
+			{\bf Project managers} look for data that allows them to successfully manage and utilize security testing
+			activities and resources according to the project plan. 
+
+			To compliance {\bf auditors}, security test metrics provide a level of software security assurance and
+			confidence that security standard compliance is addressed through the security review processes 
+			within the organization.
+
+			Finally, {\bf Chief Information Officers (CIOs) and Chief Information Security Officers (CISOs)}, 
+			responsible for the budget that needs to be allocated in security resources, look for derivation 
+			of a {\bf cost/benefit analysis} from security test data to make informed decisions on which security 
+			activities and tools to invest. 
+
+
+
+
+
+
+
+
+
 
 
