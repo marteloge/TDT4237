@@ -1,1 +1,51 @@
 \chapter{Business Logic Testing}
+
+	Testing for business logic flaws in a multi-functional dynamic web application requires thinking 
+	in unconventional ways. This type of vulnerability cannot be detected by a vulnerability scanner 
+	and relies upon the skills and creativity of the penetration tester. In addition, this type of
+	vulnerability is usually one of the hardest to detect, but, at the same time, usually one of the 
+	most detrimental to the application, if exploited. Attacks on the business logic of an application 
+	are dangerous, difficult to detect, and are usually specific to the application being tested.
+
+	{\bf Business logic may include:}
+	\begin{itemize}
+		\item {\bf Business rules} that express business policy (such as channels, location, logistics, 
+		prices, and products);
+		\item  {\bf Workflows} based on the ordered tasks of passing documents or data from one participant 
+		(a person or a software system) to another. 
+	\end{itemize}
+
+
+	Business logic can have security flaws that allow a user to do something that isn't allowed by the
+	business. For example, if there is a limit on reimbursement of \$1000, could an attacker misuse the 
+	system to request more money than it is intended? Or, perhaps, users are supposed to do operations 
+	in a particular order, but an attacker could invoke them out of sequence. Or can a user make a 
+	purchase for a negative amount of money?
+
+	{\bf Example 1:}\\
+	Setting the quantity of a product on an e-commerce site as a negative number may result in funds 
+	being credited to the attacker. The countermeasure to this problem is to implement stronger data
+	validation, as the application permits negative numbers to be entered in the quantity field of 
+	the shopping cart.
+
+	{\bf Example 2:} \\
+	Another more complex example pertains to a commercial financial application that a large institution 
+	uses for their business customers. When a user is created by an administrator account, a new userid 
+	is associated with this new account. The userids that are created are predictable. For example, 
+	if an admin from a fictitious customer of "Spacely Sprockets" creates two accounts consecutively, 
+	their respective userids will be 115 and 116. To make things worse, if two more accounts are created 
+	and their respective userids are 117 and 119, then it can be assumed that another company's admin 
+	has created a user account for their company with the userid of 118.
+
+	{\bf Creating Raw Data for Designing Logical Tests} \\
+		\begin{itemize}
+			\item {\bf All application business scenarios:} Checkout, Browse, Product ordering, Search for a 
+			product, etc.
+			\item {\bf Workflows}
+			\item {\bf Different user roles:} Manager, Staff, Administrator, CEO, etc.
+			\item {\bf Different groups or departments:} Purchasing, Marketing, Engineering, etc.
+			\item {\bf Access Rights of Various User Roles and Groups}
+			\item {\bf Privilege Table}
+		\end{itemize}
+
+
