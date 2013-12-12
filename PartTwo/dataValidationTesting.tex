@@ -74,7 +74,6 @@
 			\includegraphics[scale=0.5]{pics/xss3.png}
 		\end{figure}
 
-
 	\subsection{DOM based Cross Site Scripting}
 		Not all XSS bugs require the attacker to control the content returned from the server, but 
 		can rather abuse poor JavaScript coding practices to achieve the same results. 
@@ -98,20 +97,97 @@
 	**RELEVANT?**
 
 \section{SQL Injections (SQLi)}
-	
+	A SQL injection attack consists of insertion or "injection" of a SQL query via the input data 
+	from the client to the application. A successful SQL injection exploit can read sensitive data 
+	from the database, modify database data (Insert/Update/Delete), execute administration operations 
+	on the database (such as shutdown the DBMS), recover the content of a given file existing on 
+	the DBMS file system and, in some cases, issue commands to the operating system. 
 
+	SQL Injection attacks can be divided into the following three classes:
+		\begin{itemize}
+			\item {\bf Inband:} data is extracted using the same channel that is used to inject the 
+			SQL code. This is the most straightforward kind of attack, in which the retrieved data 
+			is presented directly in the application web page.
+			\item {\bf Out-of-band:} data is retrieved using a different channel (e.g., an email with the 
+			results of the query is generated and sent to the tester).
+			\item {\bf Inferential:} there is no actual transfer of data, but the tester is able to
+			reconstruct the information by sending particular requests and observing the resulting 
+			behaviour of the DB Server.
+			\item {\bf Blind: } if the application hides the error details, then the tester must be 
+			able to reverse engineer the logic of the original query.
+		\end{itemize}
+
+	{\bf SQL Injection Detection} \\
+	The first step in this test is to understand when our application connects to a DB Server in order 
+	to access some data. Typical examples of cases when an application needs to talk to a DB include:
+	Authentication forms, search engines, E-Commerce sites, etc.
+
+	The very first test usually consists of adding a single {\bf quote (')} or a {\bf semicolon (;)} 
+	to the field  under test. The first is used in SQL as a string terminator and, if not filtered by 
+	the application, would lead to an incorrect query. The second is used to end a SQL statement and, 
+	if it is not filtered, it is also likely to generate an error. 
+
+	{\bf Union Query SQL Injection} \\
+	Another test involves the use of the UNION operator. This operator is used in SQL injections to 
+	join a query, purposely forged by the tester, to the original query. The result of the forged 
+	query will be joined to the result of the original query, allowing the tester to obtain the 
+	values of fields of other tables.
+
+	{\bf Blind SQL Injection} \\
+	We have pointed out that there is another category of SQL injection, called Blind SQL Injection, 
+	in which nothing is known on the outcome of an operation. For example, this behavior happens in 
+	cases where the programmer has created a custom error page that does not reveal anything on 
+	the structure of the query or on the database. (The page does not return a SQL error, it may 
+	just return a HTTP 500).
+
+	{\bf Stored Procedure Injections}
+	When using dynamic SQL within a stored procedure, the application must properly sanitize the user 
+	input to eliminate the risk of code injection. If not sanitized, the user could enter malicious 
+	SQL that will be executed within the stored procedure.
+
+
+\section{XML Injection}
+	We talk about XML Injection testing when we try to inject an XML doc to the application: if the 
+	XML parser fails to make an appropriate data validation the test will results positive.
+	After lookking at a application, the tester will have some information about XML structure, 
+	so it will be possible to try to inject XML data and tags (Tag Injection).
+
+	{\bf Discovery} \\
+	The first step in order to test an application for the presence of a XML Injection vulnerability,
+	consists of trying to insert XML metacharacters.
+	A list of some XML metacharacters is:
+	\begin{itemize}
+		\item Single quote {\bf '}
+		\item Double quote {\bf "}
+		\item Angular pharenthesis {\bf < >}
+		\item Comment tag {\bf <!-- / -->}
+		\item Ampersand {\bf \&}
+	\end{itemize}
+
+\section{SSI Injection}
+	Web servers usually give to the developer the possibility of adding small pieces of dynamic code 
+	inside static HTML pages, without having to play with full-fledged server-side or client-side 
+	languages. This feature is incarnated by the Server-Side Includes (SSI), a very simple extension 
+	that can enable an attacker to inject code into HTML pages, or even perform remote
+	code execution.
+
+	Putting an SSI directive into a static HTML document is as easy as writing a piece of code like 
+	to print out the current time or like to include the content of a file.
+	We could guess if SSI are supported just looking at the content of the target web site we are testing: 
+	if it makes use of {\bf .shtml} files then SSI are probably supported, as this extension is used to
+	identify pages containing these directives.
 
 \section{Buffer Overflow}
 
 	\subsection{Heap Overflow}
+		Heap is a memory segment that is used for storing dynamically allocated data and global 
+		variables. Each chunk of memory in heap consists of boundary tags that contain memory 
+		management information. When a heap-based buffer is overflown, the control information 
+		in these tags is overwritten, and when the heap management routine frees the buffer, 
+		a memory address overwrite take place leading to an access violation. 
 
 	\subsection{Stack Overflow}
-
-	\subsection{Format String}
-
-\section{Other}
-
-	\subsection{Code Injection}
-
-	\subsection{XML Injection}
-
+		Stack overflows occur when variable size data is copied into fixed length buffers located 
+		on the program stack without any bounds checking. 
+		The key to testing an application for stack overflow vulnerabilities is supplying overly 
+		large input data as compared to what is expected. 
