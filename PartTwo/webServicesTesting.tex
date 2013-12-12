@@ -1,1 +1,54 @@
 \chapter{Web Services Testing}
+
+	{\bf SOA (Service Orientated Architecture)/Web services applications} are up-and-coming systems 
+	which are enabling businesses to interoperate and are growing at an unprecedented rate. 
+	Webservice "clients" are generally not user web front-ends but other backend servers. 
+	Webservices are exposed to the net like any other service but can be used on HTTP, FTP, SMTP, MQ
+	among other transport protocols. The Web Services Framework utilizes the HTTP protocol 
+	(as standard Web Application) in conjunction with XML, SOAP, WSDL and UDDI technologies:
+		\begin{itemize}
+			\item {\bf The "Web Services Description Language" (WSDL)} is used to describe the interfaces 
+			of a service.
+			\item {The "Simple Object Access Protocol" (SOAP)} provides the means for communication between 
+			Web Services and Client Applications with XML and HTTP.
+			\item {\bf "Universal Description, Discovery and Integration" (UDDI)} is used to register and
+			publish Web Services and their characteristics so that they can be found from potential 
+			clients.
+		\end{itemize}
+
+	The vulnerabilities in web services are similar to other vulnerabilities, such as SQL injection,
+	information disclosure, and leakage, but web services also have unique XML/parser related 
+	vulnerabilities, 
+
+	\section{WS Information Gathering}
+	{\bf Zero Knowledge} \\
+	Normally you will have a WSDL path to access the Web Service, but if you have zero knowledge about it, 
+	you will have to use UDDI to find a specific service. 
+
+	{\bf WSDL endpoints} \\
+	When a tester accesses the WSDL, he can determine an access point and available interfaces for web
+	services. These interfaces or methods take inputs using SOAP over HTTP/HTTPS. If these inputs are 
+	not defined well at the source code level, they can be compromised and exploited. 
+
+	\section{HTTP GET Parameters/REST Testing}
+
+		Many XML applications are invoked by passing them parameters using HTTP GET queries. 
+		These are sometimes known as “REST-style" Web Services 
+		{\bf (REST = Representational State Transfer)}. These Web Services can be attacked by 
+		passing malicious content on the HTTP GET string. 
+
+	\section{Replay Testing}
+
+		This section describes testing replay vulnerabilities of a web service. The threat for a replay 
+		attack is that the attacker can assume the identity of a valid user and commit some nefarious act
+		without detection. A replay attack is a "man-in-the-middle" type of attack where a message is 
+		intercepted and replayed by an attacker to impersonate the original sender. For web services, as 
+		with other types of HTTP traffic, a sniffer such as Ethereal or Wireshark can capture traffic 
+		posted to a web service and using a tool like WebScarab, a tester can resend a packet to the
+		target server. An attacker can attempt to resend the original message or change the message in 
+		order to compromise the host server.
+
+{\color{red} **NOT FINISHED. IS THE CHAPTER VERY RELEVANT?**}
+
+
+
