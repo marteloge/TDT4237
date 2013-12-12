@@ -1,1 +1,264 @@
 \chapter{Configuration Management Testing}
+	Often analysis of the infrastructure and topology architecture can reveal a great deal about a 
+	web application. Information such as source code, HTTP methods permitted, administrative 
+	functionality, authentication methods and infrastructural configurations can be obtained.
+
+\clearpage
+\section{SSL/TLS Testing}
+	The http clear-text protocol is normally secured via an SSL or TLS tunnel, resulting in 
+	https traffic. In addition to providing encryption of data in transit, https allows the 
+	identification of servers (and, optionally, of clients) by means of digital certificates.
+
+	In order to detect possible support of weak ciphers, the ports associated to SSL/TLS wrapped 
+	services must be identified. These typically include port 443 which is the standard https port, 
+	however this may change because a) https services may be configured to run on non-standard ports, 
+	and b) there may be additional SSL/TLS wrapped services related to the web 
+	application. In general a service discovery is required to identify such ports. Vulnerability 
+	Scanners, in addition to performing service discovery, may include checks against weak ciphers.
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics{pics/ssl.jpg}
+	\end{figure}
+
+\section{DB Listener Testing}
+	The Data base listener is a network daemon. It waits for connection requests from remote
+	clients. This daemon can be compromised and hence can affect the availability of the database.
+
+	It listens for connection requests and handles them accordingly. The listener, by default, 
+	listens on port 1521(different ports may be used depending on the configuration). It is
+	good practice to change the listener from this port to another arbitrary port number. 
+	If this listener is "turned off" remote access to the database is not possible. If this 
+	is the case, one’s application would fail also creating a denial of service attack.
+
+	Potential areas of attack
+	\begin{itemize}
+		\item Stop the Listener -- create a DoS attack.
+		\item Set a password and prevent others from controlling the Listener - Hijack the DB.
+		\item Write trace and log files to any file accessible to the process owner of tnslnsr 
+		- Possible informationleakage.
+		\item Obtain detailed information on the Listener, database, and application configuration.
+	\end{itemize}
+
+
+
+\section{Infrastructure Configuration Management Testing}
+	Proper configuration management of the web server infrastructure is very important in order 
+	to preserve the security of the application itself. If elements such as the web server 
+	software, the back-end database servers, or the authentication servers are not properly reviewed 
+	and secured, they might introduce undesired risks or introduce new vulnerabilities that might
+	compromise the application itself.
+
+	In order to test the configuration management infrastructure, the following steps need to be taken:
+		\begin{itemize}
+			\item The different elements that make up the infrastructure need to be determined in 
+			order to understand how they interact with a web application and how they affect 
+			its security.
+			\item All the elements of the infrastructure need to be reviewed in order to make sure 
+			that they don’t hold any known vulnerabilities.
+			\item A review needs to be made of the administrative tools used to maintain all the 
+			different elements.
+			\item The authentication systems, if any, need to reviewed in order to assure that 
+			they serve the needs of the application and that they cannot be manipulated by external 
+			users to leverage access.
+			\item A list of defined ports which are required for the application should be maintained 
+			and kept under change control.
+		\end{itemize}
+
+
+\section{Application Configuration Management Testing}
+	Proper configuration of the single elements that make up an application architecture is important 
+	in order to prevent mistakes that might compromise the security of the whole architecture.
+
+	{\bf Sample/known files and directories}\\
+	Many web servers and application servers provide, in a default installation, sample applications 
+	and files that are provided for the benefit of the developer and in order to test that the server 
+	is working properly right after installation. However, many default web server applications have 
+	been later known to be vulnerable.
+
+	{\bf Comment review} \\
+	It is very common, and even recommended, for programmers to include detailed comments on their 
+	source code in order to allow for other programmers to better understand why a given decision 
+	was taken in coding a given function. Programmers usually do it too when developing large 
+	web-based applications. However, comments included inline in HTML code might reveal to a 
+	potential attacker internal information that should not be available to them. Sometimes, even
+	source code is commented out since a functionality is no longer required, but this comment is 
+	leaked out to the HTML pages returned to the users unintentionally. Comment review should be 
+	done in order to determine if any information is being leaked through comments.
+
+	{\bf Configuration review}
+	The web server or application server configuration takes an important role in protecting the 
+	contents of the site and it must be carefully reviewed in order to spot common configuration 
+	mistakes. Obviously, the recommended configuration varies depending on the site policy, 
+	and the functionality that should be provided by the server software. In most cases, however,
+	configuration guidelines (either provided by the software vendor or external parties) should 
+	be followed in order to determine if the server has been properly secured. It is impossible 
+	to generically say how a server should be configured, however, some common guidelines should 
+	be taken into account:
+
+		\begin{itemize}
+			\item Only enable server modules that are needed for the application. This reduces 
+			the attack surface since the server is reduced in size and complexity as software 
+			modules are disabled.
+			\item Handle server errors with custom-made pages instead of with the default web 
+			server pages. Specifically make sure that any application errors will not be returned 
+			to the end-user and that no code is leaked through these since it will help an attacker. 
+			\item Make sure that the server software runs with minimised privileges in the operating 
+			system. 
+			\item Make sure the server software logs properly both legitimate access and errors.
+			\item Make sure that the server is configured to properly handle overloads and prevent 
+			Denial of Service attacks. Ensure that the server has been performance tuned properly.
+		\end{itemize}
+
+	{\bf Logging} \\
+	Logging is an important asset of the security of an application architecture, since it can be used 
+	to detect flaws in applications as well as sustained attacks from rogue users. 
+	In both cases (server and application logs) several issues should be tested and analysed based on 
+	the log contents:
+		\begin{itemize}
+			\item Are the logs stored in a dedicated server?
+			\item Can log usage generate a Denial of Service condition?
+			\item How are they rotated? Are logs kept for the sufficient time?
+			\item Do the logs contain sensitive information?
+			\item How are logs reviewed? Can administrators use these reviews to detect 
+			targeted attacks?
+			\item How are log backups preserved?
+			\item Is the data being logged data validated (min/max length, chars etc) 
+			prior to being logged?
+		\end{itemize}
+
+\section{Testing for File Extensions Handling}
+	File extensions are commonly used in web servers to easily determine which technologies 
+	/ languages / plugins must be used to fulfill the web request.
+
+	Determining how web servers handle requests corresponding to files having different extensions 
+	may help to understand web server behaviour depending on the kind of files we try to access. 
+	For example, it can help understand which file extensions are returned as text/plain versus 
+	those which cause execution on the server side. The latter are indicative of technologies / 
+	languages / plugins which are used by web servers or application servers, and may provide 
+	additional insight on how the web application is engineered. For example, a “.pl” extension 
+	is usually associated with server-side Perl support.
+
+	The following file extensions should NEVER be returned by a web server, since they are related 
+	to files which may contain sensitive information, or to files for which there is no reason to 
+	be served.
+		\begin{itemize}
+			\item .asa
+			\item .inc
+		\end{itemize}
+
+	The following file extensions are related to files which, when accessed, are either displayed 
+	or downloaded by the browser. Therefore, files with these extensions must be checked to verify 
+	that they are indeed supposed to be served (and are not leftovers), and that they do not contain
+	sensitive information.
+		\begin{itemize}
+			\item {\bf .java:} No reason to provide access to Java source files
+			\item {\bf .txt:} Text files
+			\item {\bf .zip, .tar, .gz, .tgz, .rar, ...:} (Compressed) archive files
+			\item {\bf .pdf:} PDF documents
+			\item {\bf .doc, .rtf, .xls, .ppt, ...:} Office documents
+			\item {\bf .bak, .old} and other extensions indicative of backup files 
+			(for example: ~ for Emacs backup files)
+		\end{itemize}
+
+\section{Old, Backup and Unreferenced Files}
+
+	While most of the files within a web server are directly handled by the server itself it 
+	isn't uncommon to find {\bf unreferenced and/or forgotten files} that can be used to obtain 
+	important information about either the infrastructure or the credentials. Most common 
+	scenarios include the presence of renamed old version of modified files, inclusion files 
+	that are loaded into the language of choice and can be downloaded as source, or even 
+	automatic or manual backups in form of compressed archives.
+
+	An important source of vulnerability lies in {\bf files which have nothing to do with the 
+	application}, but are created as a consequence of editing application files, or after 
+	creating on-the-fly backup copies, or by leaving in the web tree old files or unreferenced 
+	files. Performing in-place editing or other administrative actions on production web servers 
+	may inadvertently leave, as a consequence, backup copies.
+
+	As a result, these activities generate files which 
+	a) are not needed by the application, 
+	b) may be handled differently than the original file by the web server. 
+
+	For example, {\bf if we make a copy of login.asp named login.asp.old}, we are allowing users to
+	download the source code of login.asp; this is because, due to its extension, login.asp.old 
+	will be typically served as text/plain, rather than being executed. In other words, accessing 
+	login.asp causes the execution of the server-side code of login.asp, while accessing 
+	login.asp.old causes the content of login.asp.old (which is, again, server-side code) to be 
+	plainly returned to the user – and displayed in the browser. This may pose security risks, 
+	since sensitive information may be revealed. Generally, exposing server side code is a bad 
+	idea; not only are you unnecessarily exposing business logic, but you
+	may be unknowingly revealing application-related information which may help an attacker, 
+	not to mention the fact that there are too many scripts with embedded username/password 
+	in clear text (which is a careless and very dangerous practice).
+
+	Other causes of unreferenced files are due to design or configuration choices when they 
+	allow diverse kind of application- related files such as data files, configuration files, 
+	log files, to be {\bf stored in filesystem directories} that can be accessed by the
+	web server. These files have normally no reason to be in a filesystem space which could 
+	be accessed via web, since they should be accessed only at the application level, by the 
+	application itself (and not by the casual user browsing around!).
+
+	{\bf Countermeasures}
+	To guarantee an effective protection strategy, testing should be compounded by a security 
+	policy which clearly forbids dangerous practices, such as:
+
+		\begin{itemize}
+			\item Editing files in-place on the web server / application server filesystem. 
+			This is a particular bad habit, since it is likely to unwillingly generate backup 
+			files by the editors. It is amazing to see how often this is done, even in large
+			organizations.
+			\item Check carefully any other activity performed on filesystems exposed by the 
+			web server, such as spot administration activities. For example, if you occasionally 
+			need to take a snapshot of a couple of directories (which you shouldn’t, on a 
+			production system...), you may be tempted to zip/tar them first. Be careful not to 
+			forget behind those archive files!
+			\item Appropriate configuration management policies should help not to leave around 
+			obsolete and unreferenced files.
+			\item Applications should be designed not to create (or rely on) files stored under 
+			the web directory trees served by the web server. Data files, log files, configuration 
+			files, etc. should be stored in directories not accessible by the web server, to 
+			counter the possibility of information disclosure
+		\end{itemize}
+
+
+\section{Infrastructure and Application Admin Interfaces}
+
+	Administrator interfaces may be present in the application or on the application server to allow 
+	certain users to undertake privileged activities on the site. Tests should be undertaken to 
+	reveal if and how this privileged functionality can be accessed by an unauthorized or standard 
+	user. An application may require an administrator interface to enable a privileged user to access
+	functionality that may make changes to how the site functions. Such changes may include:
+		\begin{itemize}
+			\item User account provisioning
+			\item Site design and layout
+			\item Data manipultion
+			\item Configuration changes
+		\end{itemize}
+
+	In many instances, such interfaces are usually implemented with little thought of how to separate 
+	them from the normal users of the site. 
+
+\section{Testing for HTTP Methods and XST}
+	HTTP offers a number of methods that can be used to perform actions on the web server. Many of 
+	theses methods are designed to aid developers in deploying and testing HTTP applications. 
+	These HTTP methods can be used for nefarious purposes if the web server is misconfigured. 
+	Additionally, Cross Site Tracing (XST), a form of cross site scripting using the servers 
+	HTTP TRACE method, is examined.
+
+	the Hypertext Transfer Protocol (HTTP) allows several other methods. 
+	Here are the following eight methods: {\bf GET, POST, PUT, DELETE, TRACE, HEAD, 
+	OPTIONS and CONNECT}
+
+	Some of these methods can potentially pose a security risk for a web application, as they allow 
+	an attacker to modify the files stored on the web server and, in some scenarios, steal the 
+	credentials of legitimate users. More specifically, the methods that should be disabled are 
+	the following:
+		\begin{itemize}
+			\item {\bf PUT:} This method allows a client to upload new files on the web server. 
+			\item {\bf DELETE:} This method allows a client to delete a file on the web server. 
+			\item {\bf CONNECT:} This method could allow a client to use the web server as a proxy
+			\item {\bf TRACE:} This method simply echoes back to the client whatever string has been sent 
+			to the server, and is used mainly for debugging purposes.
+		\end{itemize}
+		
