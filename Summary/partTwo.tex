@@ -1,9 +1,155 @@
 \chapter{OWASP}
 
 \section{Information Gathering}
+	
+	\begin{itemize}
+		\item Spiders, robots and crawlers $\rightarrow$ wget tool
+		\item Search engine discovery $\rightarrow$ Google search
+		\item Identify application entry points $\rightarrow$ map attack suface
+		\item Web application fingerprints $\rightarrow$ get web server info
+		\item Analysis of error codes
+	\end{itemize}
+
+\section{Configuration Management}
 
 	\begin{itemize}
-		\item Hei\begin{itemize}
-				\item hei!
+		\item Encryptet communication channel $\rightarrow$ SSL/TLS $\rightarrow$ HTTPS
+		\item DB listner testing $\rightarrow$ DB network deamon, port 1521
+		\item Infrastructure
+		\item Application configuration management $\rightarrow$ comments, error pages, server overload, logging, etc
+		\item File extension management
+		\item Backup, old files and forgotten files $\rightarrow$ login.asp, login.asp.old
+		\item Admin pages
+		\item HTTP Methods $\rightarrow$ GET, POST, PUT, DELETE, TRACE, HEAD, OPTIONS, CONNECT
+	\end{itemize}
+
+\section{Authentication}
+"Confirming that something or someone is authentic"
+
+"Authenticate a person to verifi identity"
+
+	\begin{itemize}
+		\item Encrypted channel
+			\begin{itemize}
+				\item HTTP and SSL/TLS $\rightarrow$ HTTPS
+				\item Encryption Algorithm used $\rightarrow$ Safe ?
+				\item Use POST over GET $\rightarrow$ GET can log sensitive data
 			\end{itemize}
+		\item User enumeration
+			\begin{itemize}
+				\item "The password is invalid", "The username is invalid"
+				\item Testing possible combinations of username and password
+				\item URI probing
+				\item Automatic generated username/ID  $\rightarrow$ Sequence? Predictable?
+				\item Guessing and predictability
+			\end{itemize}
+		\item Guessable user account
+			\begin{itemize}
+				\item Stored default password 
+				\item Weak password policy
+				\item Information leak in comments (code)
+			\end{itemize}
+		\item Bruteforce
+			\begin{itemize}
+				\item Dictionary, Search, rule-based
+				\item "All possible combinations"
+				\item Rainbow tables $\rightarrow$ MD5 algorithm
+			\end{itemize}
+		\item Bypassing
+			\begin{itemize}
+				\item Direct page request
+				\item Parameter modification
+				\item SessionID prediction
+				\item SQL injection
+			\end{itemize}
+		\item Forgotten password/Reset password/Remembering password
+			\begin{itemize}
+				\item Questions $\rightarrow$ "What is your mothers name?"
+				\item Browser cache
+				\item Forgotten password $\rightarrow$ Password sended in clear-text to mail? $\rightarrow$ Unsafe!! (like norwegain, hihi:) )
+			\end{itemize}
+		\item Browser cache $\rightarrow$ Logout, timed logout, cached pages, sesstion handling and server checks. 
+		\item CAPTCHA
+		\item Multiple factor authentication: $\rightarrow$ Something you have and something you know
+		\item Race conditions $\rightarrow$ Account and money transfer
+	\end{itemize}
+
+\section{Session Management}
+	\begin{itemize}
+		\item Session management
+			\begin{itemize}
+				\item used to identify users accross requests
+				\item used to store actions $\rightarrow$ Shopping cart $\rightarrow$ Items added
+				\item Can be tampered with $\rightarrow$ Webstore $\rightarrow$ Checkout $\rightarrow$ Price
+				\item Analyse $\rightarrow$ Collect cookies $\rightarrow$ Algorithm, patterns, etc
+				\item Coocie overflow
+			\end{itemize}
+		\item Cookie Analysis
+			\begin{itemize}
+				\item How many cookies is stores? $\rightarrow$ What information do they contain?
+				\item Where (sites at webapp) is a new cookie generated?
+				\item What parts of a website needs a cookie?
+				\item Token structure $\rightarrow$ Patterns? Static parts? Clear text? Hash function?
+				\item Predictability, randomness and guessability
+				\item Secure flag
+				\item Expiration
+				\item Tamering possible?
+				\item Brute force
+				\item Cookie overflow
+				\item Attributes $\rightarrow$ Secure, HTTPOnly, Domain, Path, expires
+			\end{itemize}
+		\item CSRF 
+			\begin{itemize}
+				\item One-click attack/session riding
+				\item XSS $\rightarrow$ Exploits the trust a user have for a particular site
+				\item CSRF $\rightarrow$ Exploits the trust that a site has in a user's browser (cookies)
+				\item Example: Eve: Hello Alice! Look here: \textless img src:"http://bank.example.com/withdraw?
+				account=Alice\&Amount=100000000\&For=Eve" \textgreater
+			\end{itemize}
+	\end{itemize}
+
+\section{Business Logic}
+	\begin{itemize}
+		\item Business rules
+		\item negative amount (e.g price)
+		\item Roles in a system $\rightarrow$ Access 
+		\item Sequential ID generation
+		\item Workflow
+	\end{itemize}
+
+\section{Data Validation}
+
+	\begin{itemize}
+		\item XSS
+			\begin{itemize}
+				\item Reflected XSS (non-persistant) $\rightarrow$ URI
+				\item Stored XSS (persistant) $\rightarrow$ Input fields, forms, etc
+				\item DOM-based XSS $\rightarrow$ Poor javascript, metacharacters, etc
+			\end{itemize}
+		\item SQL injections (SQLi)
+			\begin{itemize}
+				\item Input from client to app
+				\item Inband $\rightarrow$ Uses the same channel
+				\item Out-of-band $\rightarrow$ Email or other channels
+				\item Inferial $\rightarrow$ No transfer of data, reconstruct info by DB behaviour
+				\item Blind $\rightarrow$ App hides error details
+				\item SQLi detection $\rightarrow$ the use of metacharacters
+				\item UNION query SQLi $\rightarrow$ get access to data/structure
+				\item Stored SQLi $\rightarrow$ do input validation!
+			\end{itemize}
+		\item XML injection $\rightarrow$ Discovery $\rightarrow$ Metacharacters
+		\item Buffer overflow $\rightarrow$ Heap overflow and stack overflow
+	\end{itemize}
+
+\section{Denail of Service (DoS)}
+	\begin{itemize}
+		\item SQL 
+			\begin{itemize}
+				\item Force database to carry out CPU intensive queries
+				\item LIKE operator $\rightarrow$ Often CPU intensive 
+			\end{itemize}
+		\item Locking custimer/admin accounts $\rightarrow$ to many login attempts
+		\item Buffer overflow
+		\item User input as a loop
+		\item Failure to release resources
 	\end{itemize}
